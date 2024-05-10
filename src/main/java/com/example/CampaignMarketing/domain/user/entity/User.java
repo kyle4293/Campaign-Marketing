@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Getter
@@ -33,6 +34,12 @@ public class User extends Timestamped {
     private String gender;
 
     private String imageUrl;
+    private String blogUrl;
+    private String bio; //자기소개
+    private String job;
+    private String interest;
+    private String activityArea;
+
 
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
@@ -40,12 +47,13 @@ public class User extends Timestamped {
 
     private String provider;
 
-    public User(String email, String password, String username, LocalDate birthDate, String gender, Role role) {
+    public User(String email, String password, String username, LocalDate birthDate, String gender, String imageUrl ,Role role) {
         this.email = email;
         this.password = password;
         this.username = username;
         this.birthDate = birthDate;
         this.gender = gender;
         this.role = role;
+        this.imageUrl = imageUrl;
     }
 }

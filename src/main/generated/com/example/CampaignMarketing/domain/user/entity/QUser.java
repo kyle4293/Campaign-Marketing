@@ -21,7 +21,13 @@ public class QUser extends EntityPathBase<User> {
 
     public final com.example.CampaignMarketing.global.entity.QTimestamped _super = new com.example.CampaignMarketing.global.entity.QTimestamped(this);
 
+    public final StringPath activityArea = createString("activityArea");
+
+    public final StringPath bio = createString("bio");
+
     public final DatePath<java.time.LocalDate> birthDate = createDate("birthDate", java.time.LocalDate.class);
+
+    public final StringPath blogUrl = createString("blogUrl");
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
@@ -33,6 +39,10 @@ public class QUser extends EntityPathBase<User> {
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final StringPath imageUrl = createString("imageUrl");
+
+    public final StringPath interest = createString("interest");
+
+    public final StringPath job = createString("job");
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> modifiedAt = _super.modifiedAt;

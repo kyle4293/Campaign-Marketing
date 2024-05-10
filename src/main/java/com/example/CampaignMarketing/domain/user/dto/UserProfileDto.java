@@ -18,7 +18,11 @@ public class UserProfileDto {
     String imageUrl;
     LocalDate birthDate;
     String gender;
-    Role role;
+    String bio;
+    String blogUrl;
+    String activityArea;
+    String interest;
+    String job;
 
     public UserProfileDto(User user) {
         this.userId = user.getId();
@@ -27,7 +31,11 @@ public class UserProfileDto {
         this.imageUrl = user.getImageUrl();
         this.birthDate = user.getBirthDate();
         this.gender = user.getGender();
-        this.role = user.getRole();
+        this.activityArea = user.getActivityArea();
+        this.bio = user.getBio();
+        this.blogUrl = user.getBlogUrl();
+        this.interest = user.getInterest();
+        this.job = user.getJob();
     }
 
 }

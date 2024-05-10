@@ -9,10 +9,13 @@ import com.example.CampaignMarketing.domain.user.entity.User;
 import com.example.CampaignMarketing.domain.user.repository.UserRepository;
 import com.example.CampaignMarketing.global.exception.CustomException;
 import com.example.CampaignMarketing.global.exception.ErrorCode;
+import com.example.CampaignMarketing.global.s3.FileUploadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Optional;
 
 @Service
@@ -21,6 +24,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final FileUploadService fileUploadService;
 
     private final String ADMIN_TOKEN = "wirafob32obvaobf3aaw1lk3ne";
 
@@ -44,33 +48,38 @@ public class UserServiceImpl implements UserService {
         }
 
         // 사용자 등록
-        User user = new User(email, password, requestDto.getUsername(), requestDto.getBirthDate(), requestDto.getGender(), role);
+        User user = new User(email, password, requestDto.getUsername(), requestDto.getBirthDate(), requestDto.getGender(), requestDto.getImageUrl(), role);
         userRepository.save(user);
 
         return new UserProfileDto(user);
     }
 
     @Override
-    public UserProfileDto updateUserProfile(User user, UpdateProfileRequestDto requestDto, String imageUrl) {
-        // 기존 비밀번호가 일치하는지 검증
-        if (!passwordEncoder.matches(requestDto.getPassword(), user.getPassword())) {
-            throw new CustomException(ErrorCode.NOT_MATCH_PASSWORD);
+    public UserProfileDto updateUserProfile(User user, UpdateProfileRequestDto requestDto) {
+        // Update user information from DTO
+        user.setGender(requestDto.getGender());
+        user.setBirthDate(requestDto.getBirthDate());
+        user.setBlogUrl(requestDto.getBlogUrl());
+        user.setBio(requestDto.getBio());
+        user.setActivityArea(requestDto.getActivityArea());
+        user.setImageUrl(requestDto.getImageUrl());
+
+
+        if ("Other".equals(requestDto.getJob()) && requestDto.getCustomJob() != null) {
+            user.setJob(requestDto.getCustomJob());
+        } else {
+            user.setJob(requestDto.getJob());
+        }
+        if ("Other".equals(requestDto.getInterest()) && requestDto.getCustomInterest() != null) {
+            user.setInterest(requestDto.getCustomInterest());
+        } else {
+            user.setInterest(requestDto.getInterest());
         }
 
-        if (requestDto.getNewPassword() != null && !requestDto.getNewPassword().trim().isEmpty()) {
-            user.setPassword(passwordEncoder.encode(requestDto.getNewPassword()));
-        }
-        if (requestDto.getUsername() != null && !requestDto.getUsername().trim().isEmpty()) {
-            user.setUsername(requestDto.getUsername());
-        }
-        if (requestDto.getGender() != null && !requestDto.getGender().trim().isEmpty()) {
-            user.setGender(requestDto.getGender());
-        }
-        if (imageUrl != null && !imageUrl.isEmpty()) {
-            user.setImageUrl(imageUrl);
-        }
-
+        // Save the updated user
         User updatedUser = userRepository.save(user);
+
+        // Return updated user profile DTO
         return new UserProfileDto(updatedUser);
     }
 

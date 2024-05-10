@@ -106,7 +106,7 @@ public class JwtUtil {
     }
 
     public String resolveToken(HttpServletRequest req) {
-        String bearerToken = getTokenFromRequest(req);
+        String bearerToken = req.getHeader("Authorization");
         if (bearerToken != null && bearerToken.startsWith(BEARER_PREFIX)) {
             return bearerToken.substring(7);
         }
@@ -149,20 +149,5 @@ public class JwtUtil {
         }
     }
 
-    public String getTokenFromRequest(HttpServletRequest req) {
-        Cookie[] cookies = req.getCookies();
-        if(cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals(AUTHORIZATION_HEADER)) {
-                    try {
-                        return URLDecoder.decode(cookie.getValue(), "UTF-8"); // Encode 되어 넘어간 Value 다시 Decode
-                    } catch (UnsupportedEncodingException e) {
-                        return null;
-                    }
-                }
-            }
-        }
-        return null;
-    }
 
 }

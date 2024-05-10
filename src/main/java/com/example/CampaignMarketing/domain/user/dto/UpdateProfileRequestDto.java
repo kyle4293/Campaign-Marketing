@@ -5,16 +5,24 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
+
 
 @Getter
 @Setter
 public class UpdateProfileRequestDto {
 
-    @NotBlank
-    private String password;
-    private String newPassword;
     private String username;
+    private String email;
     private String gender;
-    private MultipartFile imageUrl;
+    private LocalDate birthDate;
+    private String imageUrl;
+    private String blogUrl;
+    private String bio; //자기소개
+    private String job;
+    private String interest;
+    private String activityArea;
+    private String customJob;   //만약 job이 Other이면 job = customJob
+    private String customInterest;
 
 }

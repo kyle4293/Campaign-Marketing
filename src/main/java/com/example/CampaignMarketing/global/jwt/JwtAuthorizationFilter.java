@@ -40,6 +40,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain filterChain) throws ServletException, IOException {
         String accessToken = jwtUtil.resolveToken(req);
+        System.out.println("accessToken = " + accessToken);
         try {
             if (accessToken != null && jwtUtil.validateToken(accessToken)) {
 //                System.out.println("accessToken = " + accessToken);
@@ -70,7 +71,8 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                 String newAccessToken = jwtUtil.createAccessToken(id, email, role);
 //                System.out.println("newAccessToken = " + newAccessToken);
                 // 응답 헤더에 새로운 Access Token 추가
-                res.setHeader(JwtUtil.AUTHORIZATION_HEADER, newAccessToken);
+//                res.setHeader(JwtUtil.AUTHORIZATION_HEADER, newAccessToken);
+                jwtUtil.addJwtToCookie(newAccessToken, res);
                 // 인증 객체 설정
                 setAuthentication(email);
             }
