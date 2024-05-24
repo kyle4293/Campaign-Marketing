@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.File;
 import java.util.List;
 
 @Getter
@@ -13,12 +14,13 @@ import java.util.List;
 @AllArgsConstructor
 public class MarketRequestDto {
 
-    private String category;
+    private String businessCertificate;
+    private String companyName;
+    private String businessType;
+    private String phone;
     private String address;
-    private String name;
     private String description;
-    private String wayDescription;
-
-    private List<String> imageUrls; // 이미지 URL 리스트 추가
+    private List<String> keywords;
+    private List<String> imageUrls;
 
 }

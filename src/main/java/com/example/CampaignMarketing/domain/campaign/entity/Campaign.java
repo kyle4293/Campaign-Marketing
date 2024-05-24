@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,11 +27,11 @@ public class Campaign extends Timestamped {
     private Market market;
 
     private String title;
-    private String keyword;
     private String description;
-    private String gender;
-    private List<String> age;
-    private List<String> job;
+    private List<String> keywords;
+    private LocalDate startDate;
+    private LocalDate endDate;
+
     @ElementCollection
     @CollectionTable(name = "campaign_images", joinColumns = @JoinColumn(name = "campaign_id"))
     @Column(name = "image_url")
@@ -39,11 +40,10 @@ public class Campaign extends Timestamped {
     public Campaign(Market market, CampaignRequestDto requestDto) {
         this.market = market;
         this.title = requestDto.getTitle();
-        this.keyword = requestDto.getKeyword();
+        this.keywords = requestDto.getKeywords();
         this.description = requestDto.getDescription();
-        this.gender = requestDto.getGender();
-        this.age = requestDto.getAge();
-        this.job = requestDto.getJob();
+        this.startDate = requestDto.getStartDate();
+        this.endDate = requestDto.getEndDate();
         this.imageUrls = requestDto.getImageUrls();
     }
 

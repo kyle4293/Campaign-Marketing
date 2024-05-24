@@ -30,8 +30,8 @@ public class CampaignController {
 
     @PostMapping(consumes = "multipart/form-data")
     public CampaignResponseDto createCampaign(@AuthenticationPrincipal UserDetailsImpl userDetails,
-                                              @RequestPart("post") CampaignRequestDto requestDto,
-                                              @RequestPart(value = "imageUrls", required = false) List<MultipartFile> files) throws IOException {
+                                              @RequestPart("campaignData") CampaignRequestDto requestDto,
+                                              @RequestPart(value = "images", required = false) List<MultipartFile> files) throws IOException {
         User user = userDetails.getUser();
         List<String> fileUrls = null;
         if (files != null && !files.isEmpty()) {
@@ -41,18 +41,6 @@ public class CampaignController {
         return campaignService.createCampaign(user, requestDto);
     }
 
-    @GetMapping
-    public Page<CampaignResponseDto> getCampaigns(
-            @RequestParam(value = "keyword", required = false) String keyword,
-            @RequestParam(name = "page", defaultValue = "1") int page,
-            @RequestParam(name = "size", defaultValue = "10") int size,
-            @RequestParam(name = "sortBy", defaultValue = "createdAt") String sortBy,
-            @RequestParam(name = "isAsc", defaultValue = "true") boolean isAsc) {
-        System.out.println("keyword = " + keyword);
-
-        // 서비스 메소드 호출시 페이지 번호 조정
-        return campaignService.getCampaigns(page - 1, size, sortBy, isAsc, keyword);
-    }
 
     @GetMapping("/recommend")
     public Page<CampaignResponseDto> getRecommendedCampaigns() {

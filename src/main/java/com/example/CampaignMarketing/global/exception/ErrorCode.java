@@ -10,8 +10,8 @@ public enum ErrorCode {
 
     /* USER */
     // 00: not found, 99 : 관리자 관련
-    NOT_FOUND_BY_ID(HttpStatus.NOT_FOUND, "U10000", "해당 id를 가지는 유저를 찾을 수 없습니다."),
-    NOT_FOUND_USER_FOR_LOGIN(HttpStatus.NOT_FOUND, "U10001", "존재하지 않는 회원입니다."),
+    NOT_FOUND_USER(HttpStatus.NOT_FOUND, "U10000", "해당 유저를 찾을 수 없습니다."),
+    LOGIN_FAILED(HttpStatus.UNAUTHORIZED, "U10001", "로그인 실패"),
     REQUIRED_ADMIN_USER_AUTHORITY(HttpStatus.UNAUTHORIZED, "U19900", "관리자 권한이 필요합니다."),
     INVALID_ADMIN_TOKEN(HttpStatus.BAD_REQUEST, "U19901", "유효하지 않은 관리자 토큰입니다."),
     EXISTED_USER_EMAIL(HttpStatus.CONFLICT, "U10100", "사용 중인 이메일 입니다."),

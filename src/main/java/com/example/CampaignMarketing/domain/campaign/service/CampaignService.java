@@ -40,37 +40,6 @@ public class CampaignService {
 
         return new CampaignResponseDto(saveCampaign);
 
-//        System.out.println("market = " + market);
-//        System.out.println("market.getUser() = " + market.getUser());
-//        System.out.println("user = " + user);
-
-//        if (market.getUser().equals(user)) {
-//            // RequestDto -> Entity
-//            Campaign campaign = new Campaign(market, requestDto);
-//            // DB 저장
-//            Campaign saveCampaign = campaignRepository.save(campaign);
-//
-//            return new CampaignResponseDto(saveCampaign);
-//        } else {
-//            throw new CustomException(ErrorCode.INVALID_ADMIN_TOKEN);
-//        }
-
-    }
-
-    public Page<CampaignResponseDto> getCampaigns(int page, int size, String sortBy, boolean isAsc, String keyword) {
-        Sort sort = Sort.by(isAsc ? Sort.Direction.ASC : Sort.Direction.DESC, sortBy);
-        Pageable pageable = PageRequest.of(page, size, sort);
-//        System.out.println("keyword = " + keyword);
-
-        if (keyword != null && !keyword.isEmpty()) {
-            QMarket qMarket = QMarket.market;
-            BooleanBuilder builder = new BooleanBuilder();
-            builder.and(qMarket.name.containsIgnoreCase(keyword)
-                    .or(qMarket.description.containsIgnoreCase(keyword)));
-            return campaignRepository.findAll(builder, pageable).map(CampaignResponseDto::new);
-        } else {
-            return campaignRepository.findAll(pageable).map(CampaignResponseDto::new);
-        }
     }
 
     public CampaignResponseDto getCampaignDto(Long id) {

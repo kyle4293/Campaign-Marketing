@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -15,12 +16,11 @@ public class CampaignRequestDto {
 
     private Long marketId;
     private String title;
-    private String keyword;
+    private List<String> keywords;
     private String description;
-    private String gender;
-    private List<String> age;
-    private List<String> job;
-    private List<String> imageUrls; // 이미지 URL 리스트 추가
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private List<String> imageUrls;
 
 
 }

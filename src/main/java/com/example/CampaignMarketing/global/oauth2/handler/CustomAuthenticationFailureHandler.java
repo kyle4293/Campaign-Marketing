@@ -16,7 +16,7 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-        ApiResponse apiResponse = ApiResponse.of(ErrorCode.NOT_FOUND_USER_FOR_LOGIN.getCode(), ErrorCode.NOT_FOUND_USER_FOR_LOGIN.getMessage(), "");
+        ApiResponse apiResponse = ApiResponse.of(ErrorCode.NOT_FOUND_USER.getCode(), ErrorCode.NOT_FOUND_USER.getMessage(), "");
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");

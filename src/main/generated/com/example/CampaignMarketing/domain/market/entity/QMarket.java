@@ -26,9 +26,13 @@ public class QMarket extends EntityPathBase<Market> {
 
     public final StringPath address = createString("address");
 
+    public final StringPath businessCertificate = createString("businessCertificate");
+
+    public final StringPath businessType = createString("businessType");
+
     public final ListPath<com.example.CampaignMarketing.domain.campaign.entity.Campaign, com.example.CampaignMarketing.domain.campaign.entity.QCampaign> campaigns = this.<com.example.CampaignMarketing.domain.campaign.entity.Campaign, com.example.CampaignMarketing.domain.campaign.entity.QCampaign>createList("campaigns", com.example.CampaignMarketing.domain.campaign.entity.Campaign.class, com.example.CampaignMarketing.domain.campaign.entity.QCampaign.class, PathInits.DIRECT2);
 
-    public final StringPath category = createString("category");
+    public final StringPath companyName = createString("companyName");
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
@@ -39,12 +43,12 @@ public class QMarket extends EntityPathBase<Market> {
 
     public final ListPath<String, StringPath> imageUrls = this.<String, StringPath>createList("imageUrls", String.class, StringPath.class, PathInits.DIRECT2);
 
+    public final ListPath<String, StringPath> keywords = this.<String, StringPath>createList("keywords", String.class, StringPath.class, PathInits.DIRECT2);
+
     //inherited
     public final DateTimePath<java.time.LocalDateTime> modifiedAt = _super.modifiedAt;
 
-    public final StringPath name = createString("name");
-
-    public final NumberPath<Long> ownerId = createNumber("ownerId", Long.class);
+    public final StringPath phone = createString("phone");
 
     public final com.example.CampaignMarketing.domain.user.entity.QUser user;
 

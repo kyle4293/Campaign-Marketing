@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -12,22 +13,28 @@ import java.util.List;
 @NoArgsConstructor
 public class CampaignResponseDto {
 
-    private Long id;
-
+    //market info
     private String marketName;
-    private String title;
-    private String keyword;
-    private String description;
     private String address;
+
+    //campaign info
+    private Long id;
+    private String title;
+    private List<String> keywords;
+    private String description;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private List<String> imageUrls;
 
     public CampaignResponseDto(Campaign campaign) {
-        this.id = campaign.getId();
-        this.marketName = campaign.getMarket().getName();
+        this.marketName = campaign.getMarket().getCompanyName();
         this.address = campaign.getMarket().getAddress();
+        this.id = campaign.getId();
         this.title = campaign.getTitle();
-        this.keyword = campaign.getKeyword();
+        this.keywords = campaign.getKeywords();
         this.description = campaign.getDescription();
+        this.startDate = campaign.getStartDate();
+        this.endDate = campaign.getEndDate();
         this.imageUrls = campaign.getImageUrls();
     }
 }

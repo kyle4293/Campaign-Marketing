@@ -4,6 +4,7 @@ import com.example.CampaignMarketing.domain.user.dto.LoginRequestDto;
 import com.example.CampaignMarketing.domain.user.entity.User;
 import com.example.CampaignMarketing.global.exception.CustomException;
 import com.example.CampaignMarketing.global.exception.ErrorCode;
+import com.example.CampaignMarketing.global.response.ApiResponse;
 import com.example.CampaignMarketing.global.security.UserDetailsImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
@@ -65,9 +66,20 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         jwtUtil.addJwtToCookie(accessToken, response);
     }
 
+//    @Override
+//    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
+//        log.info("로그인 실패");
+//        throw new CustomException(ErrorCode.LOGIN_FAILED);
+//    }
+
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
         log.info("로그인 실패");
-        throw new CustomException(ErrorCode.NOT_FOUND_USER_FOR_LOGIN);
+
+        ApiResponse apiResponse = ApiResponse.of(ErrorCode.LOGIN_FAILED.getCode(), ErrorCode.LOGIN_FAILED.getMessage(), "");
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(mapper.writeValueAsString(apiResponse));
     }
 }

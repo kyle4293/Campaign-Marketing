@@ -12,6 +12,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Comment;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,20 +30,14 @@ public class Market extends Timestamped {
     @JoinColumn(name = "user_id")
     private User user;
 
-    private String category;
-
-    private Long ownerId;
-
+    private String businessCertificate;
+    private String companyName;
+    private String businessType;
+    private String phone;
     private String address;
-
-    private String name;
-
-    @Comment("가게 한 줄 소개")
     private String description;
+    private List<String> keywords;
 
-
-
-    // 이미지 URL을 저장하는 리스트
     @ElementCollection
     @CollectionTable(name = "market_images", joinColumns = @JoinColumn(name = "market_id"))
     @Column(name = "image_url")
@@ -51,21 +46,16 @@ public class Market extends Timestamped {
     @OneToMany(mappedBy = "market")
     private List<Campaign> campaigns = new ArrayList<>();
 
-    @Builder
-    public Market(String category, Long ownerId, String address, String name, String description) {
-        this.category = category;
-        this.ownerId = ownerId;
-        this.address = address;
-        this.name = name;
-        this.description = description;
-    }
 
     public Market(User user, MarketRequestDto requestDto) {
         this.user = user;
-        this.category = requestDto.getCategory();
+        this.businessCertificate = requestDto.getBusinessCertificate();
+        this.companyName = requestDto.getCompanyName();
+        this.businessType = requestDto.getBusinessType();
+        this.phone = requestDto.getPhone();
         this.address = requestDto.getAddress();
-        this.name = requestDto.getName();
         this.description = requestDto.getDescription();
+        this.keywords = requestDto.getKeywords();
         this.imageUrls = requestDto.getImageUrls();
     }
 }

@@ -24,27 +24,25 @@ public class QCampaign extends EntityPathBase<Campaign> {
 
     public final com.example.CampaignMarketing.global.entity.QTimestamped _super = new com.example.CampaignMarketing.global.entity.QTimestamped(this);
 
-    public final ListPath<String, StringPath> age = this.<String, StringPath>createList("age", String.class, StringPath.class, PathInits.DIRECT2);
-
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
 
     public final StringPath description = createString("description");
 
-    public final StringPath gender = createString("gender");
+    public final DatePath<java.time.LocalDate> endDate = createDate("endDate", java.time.LocalDate.class);
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final ListPath<String, StringPath> imageUrls = this.<String, StringPath>createList("imageUrls", String.class, StringPath.class, PathInits.DIRECT2);
 
-    public final ListPath<String, StringPath> job = this.<String, StringPath>createList("job", String.class, StringPath.class, PathInits.DIRECT2);
-
-    public final StringPath keyword = createString("keyword");
+    public final ListPath<String, StringPath> keywords = this.<String, StringPath>createList("keywords", String.class, StringPath.class, PathInits.DIRECT2);
 
     public final com.example.CampaignMarketing.domain.market.entity.QMarket market;
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> modifiedAt = _super.modifiedAt;
+
+    public final DatePath<java.time.LocalDate> startDate = createDate("startDate", java.time.LocalDate.class);
 
     public final StringPath title = createString("title");
 
