@@ -39,6 +39,8 @@ public class QMarket extends EntityPathBase<Market> {
 
     public final StringPath description = createString("description");
 
+    public final StringPath detailAddress = createString("detailAddress");
+
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final ListPath<String, StringPath> imageUrls = this.<String, StringPath>createList("imageUrls", String.class, StringPath.class, PathInits.DIRECT2);

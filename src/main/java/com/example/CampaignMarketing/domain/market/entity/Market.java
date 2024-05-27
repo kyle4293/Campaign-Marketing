@@ -1,18 +1,14 @@
 package com.example.CampaignMarketing.domain.market.entity;
 
-
 import com.example.CampaignMarketing.domain.campaign.entity.Campaign;
 import com.example.CampaignMarketing.domain.market.dto.MarketRequestDto;
 import com.example.CampaignMarketing.domain.user.entity.User;
 import com.example.CampaignMarketing.global.entity.Timestamped;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Comment;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +18,8 @@ import java.util.List;
 @Table(name = "market")
 public class Market extends Timestamped {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "market_id")
     private Long id;
 
@@ -35,6 +32,7 @@ public class Market extends Timestamped {
     private String businessType;
     private String phone;
     private String address;
+    private String detailAddress;
     private String description;
     private List<String> keywords;
 
@@ -46,7 +44,6 @@ public class Market extends Timestamped {
     @OneToMany(mappedBy = "market")
     private List<Campaign> campaigns = new ArrayList<>();
 
-
     public Market(User user, MarketRequestDto requestDto) {
         this.user = user;
         this.businessCertificate = requestDto.getBusinessCertificate();
@@ -54,6 +51,7 @@ public class Market extends Timestamped {
         this.businessType = requestDto.getBusinessType();
         this.phone = requestDto.getPhone();
         this.address = requestDto.getAddress();
+        this.detailAddress = requestDto.getDetailAddress();
         this.description = requestDto.getDescription();
         this.keywords = requestDto.getKeywords();
         this.imageUrls = requestDto.getImageUrls();

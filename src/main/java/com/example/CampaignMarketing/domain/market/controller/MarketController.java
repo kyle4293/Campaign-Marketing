@@ -66,15 +66,22 @@ public class MarketController {
     }
 
     @GetMapping("/{id}/campaigns")
-    public Page<CampaignResponseDto> getCampaignsByMarketId(
+    public Page<CampaignResponseDto> getCampaignsByMarketId(@AuthenticationPrincipal UserDetailsImpl userDetails,
             @PathVariable Long id,
             @RequestParam(value = "keyword", required = false) String keyword,
             @RequestParam(name = "page", defaultValue = "1") int page,
             @RequestParam(name = "size", defaultValue = "10") int size,
             @RequestParam(name = "sortBy", defaultValue = "createdAt") String sortBy,
             @RequestParam(name = "isAsc", defaultValue = "true") boolean isAsc) {
+        User user = userDetails.getUser();
 
-        return marketService.getCampaignsByMarketId(id, page, size, sortBy, isAsc, keyword);
+        return marketService.getCampaignsByMarketId(user, id, page, size, sortBy, isAsc, keyword);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteMarket(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long id) {
+        User user = userDetails.getUser();
+        marketService.deleteMarket(user, id);
     }
 
 }

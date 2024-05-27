@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.io.File;
 import java.util.List;
 
 @Getter
@@ -19,8 +18,8 @@ public class MarketRequestDto {
     private String businessType;
     private String phone;
     private String address;
+    private String detailAddress;
     private String description;
     private List<String> keywords;
     private List<String> imageUrls;
-
 }

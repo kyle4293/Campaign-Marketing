@@ -44,15 +44,18 @@ public class MarketService {
         Sort sort = Sort.by(isAsc ? Sort.Direction.ASC : Sort.Direction.DESC, sortBy);
         Pageable pageable = PageRequest.of(page, size, sort);
 
+        QMarket qMarket = QMarket.market;
+        BooleanBuilder builder = new BooleanBuilder();
+
+        builder.and(qMarket.user.eq(user));
+
         if (keyword != null && !keyword.isEmpty()) {
-            QMarket qMarket = QMarket.market;
-            BooleanBuilder builder = new BooleanBuilder();
             builder.and(qMarket.companyName.containsIgnoreCase(keyword)
                     .or(qMarket.description.containsIgnoreCase(keyword)));
-            return marketRepository.findAll(builder, pageable).map(MarketResponseDto::new);
-        } else {
-            return marketRepository.findByUser(user, pageable).map(MarketResponseDto::new);
         }
+
+        return marketRepository.findAll(builder, pageable).map(MarketResponseDto::new);
+
     }
 
     public MarketResponseDto getMarketDto(Long id) {
@@ -67,13 +70,14 @@ public class MarketService {
         );
     }
 
-    public Page<CampaignResponseDto> getCampaignsByMarketId(Long marketId, int page, int size, String sortBy, boolean isAsc, String keyword) {
+    public Page<CampaignResponseDto> getCampaignsByMarketId(User user, Long marketId, int page, int size, String sortBy, boolean isAsc, String keyword) {
         Sort sort = Sort.by(isAsc ? Sort.Direction.ASC : Sort.Direction.DESC, sortBy);
         Pageable pageable = PageRequest.of(page, size, sort);
 
         QCampaign qCampaign = QCampaign.campaign;
         BooleanBuilder builder = new BooleanBuilder();
         builder.and(qCampaign.market.id.eq(marketId));
+        builder.and(qCampaign.market.user.eq(user));
 
         if (keyword != null && !keyword.isEmpty()) {
             builder.and(qCampaign.title.containsIgnoreCase(keyword)
@@ -83,4 +87,13 @@ public class MarketService {
         return campaignRepository.findAll(builder, pageable).map(CampaignResponseDto::new);
     }
 
+    public void deleteMarket(User user, Long id) {
+        Market market = findMarket(id);
+
+        if(market.getUser().getId().equals(user.getId())) {
+            marketRepository.delete(market);
+        } else {
+            throw new CustomException(ErrorCode.REQUIRED_ADMIN_USER_AUTHORITY);
+        }
+    }
 }
