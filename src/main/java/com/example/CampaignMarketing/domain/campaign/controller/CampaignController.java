@@ -41,6 +41,15 @@ public class CampaignController {
         return campaignService.createCampaign(user, requestDto);
     }
 
+    @GetMapping()
+    public Page<CampaignResponseDto> getCampaigns(  @RequestParam(value = "keyword", required = false) String keyword,
+                                                    @RequestParam(name = "page", defaultValue = "1") int page,
+                                                    @RequestParam(name = "size", defaultValue = "10") int size,
+                                                    @RequestParam(name = "sortBy", defaultValue = "endDate") String sortBy,
+                                                    @RequestParam(name = "isAsc", defaultValue = "false") boolean isAsc) {
+
+        return campaignService.getCampaigns(page, size, sortBy, isAsc, keyword);
+    }
 
     @GetMapping("/recommend")
     public Page<CampaignResponseDto> getRecommendedCampaigns() {
@@ -50,6 +59,11 @@ public class CampaignController {
     @GetMapping("/{id}")
     public CampaignResponseDto getCampaignDto(@PathVariable Long id) {
         return campaignService.getCampaignDto(id);
+    }
+
+    @GetMapping("/totalPage")
+    public long getTotalPages() {
+        return campaignService.getTotalPages();
     }
 
 }

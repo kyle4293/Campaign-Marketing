@@ -4,6 +4,7 @@ package com.example.CampaignMarketing.domain.campaign.service;
 import com.example.CampaignMarketing.domain.campaign.dto.CampaignRequestDto;
 import com.example.CampaignMarketing.domain.campaign.dto.CampaignResponseDto;
 import com.example.CampaignMarketing.domain.campaign.entity.Campaign;
+import com.example.CampaignMarketing.domain.campaign.entity.QCampaign;
 import com.example.CampaignMarketing.domain.campaign.repository.CampaignRepository;
 import com.example.CampaignMarketing.domain.market.entity.Market;
 import com.example.CampaignMarketing.domain.market.entity.QMarket;
@@ -42,6 +43,22 @@ public class CampaignService {
 
     }
 
+    public Page<CampaignResponseDto> getCampaigns(int page, int size, String sortBy, boolean isAsc, String keyword) {
+        Sort sort = Sort.by(isAsc ? Sort.Direction.ASC : Sort.Direction.DESC, sortBy);
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        QCampaign qCampaign = QCampaign.campaign;
+        BooleanBuilder builder = new BooleanBuilder();
+        System.out.println("keyword = " + keyword);
+        if (keyword != null && !keyword.isEmpty()) {
+            builder.and(qCampaign.title.containsIgnoreCase(keyword)
+                    .or(qCampaign.description.containsIgnoreCase(keyword))
+                    .or(qCampaign.market.companyName.containsIgnoreCase(keyword)));
+        }
+
+        return campaignRepository.findAll(builder, pageable).map(CampaignResponseDto::new);
+    }
+
     public CampaignResponseDto getCampaignDto(Long id) {
         Campaign campaign = findCampaign(id);
         CampaignResponseDto campaignResponseDto = new CampaignResponseDto(campaign);
@@ -66,4 +83,7 @@ public class CampaignService {
     }
 
 
+    public long getTotalPages() {
+        return campaignRepository.count();
+    }
 }

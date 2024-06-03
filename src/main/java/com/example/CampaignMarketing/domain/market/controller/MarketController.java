@@ -71,8 +71,8 @@ public class MarketController {
             @RequestParam(value = "keyword", required = false) String keyword,
             @RequestParam(name = "page", defaultValue = "1") int page,
             @RequestParam(name = "size", defaultValue = "10") int size,
-            @RequestParam(name = "sortBy", defaultValue = "createdAt") String sortBy,
-            @RequestParam(name = "isAsc", defaultValue = "true") boolean isAsc) {
+            @RequestParam(name = "sortBy", defaultValue = "endDate") String sortBy,
+            @RequestParam(name = "isAsc", defaultValue = "false") boolean isAsc) {
         User user = userDetails.getUser();
 
         return marketService.getCampaignsByMarketId(user, id, page, size, sortBy, isAsc, keyword);
