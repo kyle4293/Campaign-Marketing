@@ -16,6 +16,7 @@ public class CampaignResponseDto {
     //market info
     private String marketName;
     private String address;
+    private String detailAddress;
 
     //campaign info
     private Long id;
@@ -29,6 +30,7 @@ public class CampaignResponseDto {
     public CampaignResponseDto(Campaign campaign) {
         this.marketName = campaign.getMarket().getCompanyName();
         this.address = campaign.getMarket().getAddress();
+        this.detailAddress = campaign.getMarket().getDetailAddress();
         this.id = campaign.getId();
         this.title = campaign.getTitle();
         this.keywords = campaign.getKeywords();

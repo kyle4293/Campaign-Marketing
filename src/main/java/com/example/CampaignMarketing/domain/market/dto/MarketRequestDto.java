@@ -21,5 +21,6 @@ public class MarketRequestDto {
     private String detailAddress;
     private String description;
     private List<String> keywords;
+    private List<String> menus;
     private List<String> imageUrls;
 }

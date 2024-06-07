@@ -35,6 +35,7 @@ public class Market extends Timestamped {
     private String detailAddress;
     private String description;
     private List<String> keywords;
+    private List<String> menus;
 
     @ElementCollection
     @CollectionTable(name = "market_images", joinColumns = @JoinColumn(name = "market_id"))
@@ -54,6 +55,7 @@ public class Market extends Timestamped {
         this.detailAddress = requestDto.getDetailAddress();
         this.description = requestDto.getDescription();
         this.keywords = requestDto.getKeywords();
+        this.menus = requestDto.getMenus();
         this.imageUrls = requestDto.getImageUrls();
     }
 }

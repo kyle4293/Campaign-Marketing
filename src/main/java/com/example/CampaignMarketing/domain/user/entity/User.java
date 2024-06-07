@@ -37,7 +37,9 @@ public class User extends Timestamped {
     private String blogUrl;
     private String bio; //자기소개
     private String job;
-    private String interest;
+    private List<String> considerations;
+    private List<String> fav_foods;
+    private List<String> cant_foods;
     private String activityArea;
 
 

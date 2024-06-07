@@ -70,11 +70,7 @@ public class UserServiceImpl implements UserService {
         } else {
             user.setJob(requestDto.getJob());
         }
-        if ("Other".equals(requestDto.getInterest()) && requestDto.getCustomInterest() != null) {
-            user.setInterest(requestDto.getCustomInterest());
-        } else {
-            user.setInterest(requestDto.getInterest());
-        }
+
 
         // Save the updated user
         User updatedUser = userRepository.save(user);

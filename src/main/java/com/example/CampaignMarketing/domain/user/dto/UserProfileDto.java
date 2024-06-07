@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @AllArgsConstructor
@@ -21,7 +22,9 @@ public class UserProfileDto {
     String bio;
     String blogUrl;
     String activityArea;
-    String interest;
+    private List<String> considerations;
+    private List<String> fav_foods;
+    private List<String> cant_foods;
     String job;
 
     public UserProfileDto(User user) {
@@ -34,7 +37,6 @@ public class UserProfileDto {
         this.activityArea = user.getActivityArea();
         this.bio = user.getBio();
         this.blogUrl = user.getBlogUrl();
-        this.interest = user.getInterest();
         this.job = user.getJob();
     }
 
