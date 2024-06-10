@@ -1,6 +1,7 @@
 package com.example.CampaignMarketing.domain.campaign.service;
 
 
+import com.example.CampaignMarketing.domain.campaign.dto.CampaignRecommendResponseDto;
 import com.example.CampaignMarketing.domain.campaign.dto.CampaignRequestDto;
 import com.example.CampaignMarketing.domain.campaign.dto.CampaignResponseDto;
 import com.example.CampaignMarketing.domain.campaign.entity.Campaign;
@@ -15,18 +16,29 @@ import com.example.CampaignMarketing.global.exception.ErrorCode;
 import com.querydsl.core.BooleanBuilder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.reactive.function.BodyInserter;
+import org.springframework.web.reactive.function.BodyInserters;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
 @Transactional
 public class CampaignService {
+
+    @Autowired
+    private WebClient webClient;
 
     private final CampaignRepository campaignRepository;
     private final MarketRepository marketRepository;
@@ -77,9 +89,27 @@ public class CampaignService {
         );
     }
 
-    public Page<CampaignResponseDto> getRecommendedCampaigns() {
+    public Mono<Page<CampaignRecommendResponseDto>> getRecommendedCampaigns() {
         Pageable pageable = PageRequest.of(0, 3);
-        return campaignRepository.findAll(pageable).map(CampaignResponseDto::new);
+        Map<String, Object> requestBody = new HashMap<>();
+        requestBody.put("test", "test");
+        /*requestBody.put("user_id", user.getId());
+        requestBody.put("cant_foods", user.getCant_foods());
+        requestBody.put("fav_foods", user.getFav_foods());
+        requestBody.put("gender", user.getGender());
+        LocalDate currentData = LocalDate.now();
+        int age = currentData.getYear() - user.getBirthDate().getYear() + 1;
+        requestBody.put("age", age);
+        requestBody.put("considerations", user.getConsiderations());*/
+        //return campaignRepository.findAll(pageable).map(CampaignResponseDto::new);
+        return webClient.post()
+                .uri("/recommend")
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(BodyInserters.fromValue(requestBody))
+                .retrieve()
+                .bodyToFlux(CampaignRecommendResponseDto.class)
+                .collectList()
+                .map(list -> new PageImpl<>(list, pageable, list.size()));
     }
 
 
