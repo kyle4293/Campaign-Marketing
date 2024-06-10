@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
+import java.util.List;
 
 
 @Getter
@@ -20,9 +21,10 @@ public class UpdateProfileRequestDto {
     private String blogUrl;
     private String bio; //자기소개
     private String job;
-    private String interest;
+    private List<String> considerations;
+    private List<String> fav_foods;
+    private List<String> cant_foods;
     private String activityArea;
-    private String customJob;   //만약 job이 Other이면 job = customJob
-    private String customInterest;
+
 
 }

@@ -21,6 +21,7 @@ public class MarketResponseDto {
     private String detailAddress;
     private String description;
     private List<String> keywords;
+    private List<String> menus;
     private List<String> imageUrls;
 
     public MarketResponseDto(Market market) {
@@ -32,6 +33,7 @@ public class MarketResponseDto {
         this.detailAddress = market.getDetailAddress();
         this.description = market.getDescription();
         this.keywords = market.getKeywords();
+        this.menus = market.getMenus();
         this.imageUrls = market.getImageUrls();
     }
 }

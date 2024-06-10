@@ -63,14 +63,10 @@ public class UserServiceImpl implements UserService {
         user.setBio(requestDto.getBio());
         user.setActivityArea(requestDto.getActivityArea());
         user.setImageUrl(requestDto.getImageUrl());
-
-
-        if ("Other".equals(requestDto.getJob()) && requestDto.getCustomJob() != null) {
-            user.setJob(requestDto.getCustomJob());
-        } else {
-            user.setJob(requestDto.getJob());
-        }
-
+        user.setJob(requestDto.getJob());
+        user.setConsiderations(requestDto.getConsiderations());
+        user.setFav_foods(requestDto.getFav_foods());
+        user.setCant_foods(requestDto.getCant_foods());
 
         // Save the updated user
         User updatedUser = userRepository.save(user);
@@ -78,5 +74,6 @@ public class UserServiceImpl implements UserService {
         // Return updated user profile DTO
         return new UserProfileDto(updatedUser);
     }
+
 
 }

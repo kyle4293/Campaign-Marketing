@@ -38,6 +38,9 @@ public class UserProfileDto {
         this.bio = user.getBio();
         this.blogUrl = user.getBlogUrl();
         this.job = user.getJob();
+        this.considerations = user.getConsiderations();
+        this.fav_foods = user.getFav_foods();
+        this.cant_foods = user.getCant_foods();
     }
 
 }

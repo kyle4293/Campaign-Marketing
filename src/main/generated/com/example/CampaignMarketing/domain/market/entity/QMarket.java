@@ -47,6 +47,8 @@ public class QMarket extends EntityPathBase<Market> {
 
     public final ListPath<String, StringPath> keywords = this.<String, StringPath>createList("keywords", String.class, StringPath.class, PathInits.DIRECT2);
 
+    public final ListPath<String, StringPath> menus = this.<String, StringPath>createList("menus", String.class, StringPath.class, PathInits.DIRECT2);
+
     //inherited
     public final DateTimePath<java.time.LocalDateTime> modifiedAt = _super.modifiedAt;
 

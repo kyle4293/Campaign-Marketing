@@ -52,7 +52,7 @@ public class CampaignController {
     }
 
     @GetMapping("/recommend")
-    public Page<CampaignResponseDto> getRecommendedCampaigns() {
+    public Page<CampaignResponseDto> getRecommendedCampaigns(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         return campaignService.getRecommendedCampaigns();
     }
 
