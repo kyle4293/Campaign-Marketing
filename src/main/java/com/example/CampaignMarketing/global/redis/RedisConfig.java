@@ -1,5 +1,7 @@
 package com.example.CampaignMarketing.global.redis;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +15,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
 public class RedisConfig {
+    private static final Logger logger = LoggerFactory.getLogger(RedisConfig.class);
 
     @Value("${spring.data.redis.host}")
     private String host;
@@ -23,6 +26,8 @@ public class RedisConfig {
 
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
+        logger.info("Configuring Redis with host: {}, port: {}, password: {}", host, port, password);
+
         RedisStandaloneConfiguration config = new RedisStandaloneConfiguration();
         config.setHostName(host);
         config.setPort(port);
