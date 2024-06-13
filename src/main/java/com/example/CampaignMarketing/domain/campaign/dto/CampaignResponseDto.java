@@ -14,6 +14,7 @@ import java.util.List;
 public class CampaignResponseDto {
 
     //market info
+    private Long marketId;
     private String marketName;
     private String address;
     private String detailAddress;
@@ -28,6 +29,7 @@ public class CampaignResponseDto {
     private List<String> imageUrls;
 
     public CampaignResponseDto(Campaign campaign) {
+        this.marketId = campaign.getMarket().getId();
         this.marketName = campaign.getMarket().getCompanyName();
         this.address = campaign.getMarket().getAddress();
         this.detailAddress = campaign.getMarket().getDetailAddress();

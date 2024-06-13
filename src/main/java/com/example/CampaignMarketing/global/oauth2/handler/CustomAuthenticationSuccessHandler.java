@@ -53,6 +53,6 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
 
         // 리다이렉션 (클라이언트의 홈 페이지로)
-        response.sendRedirect("http://localhost:3000/");
+        response.sendRedirect("https://www.voicefinder.kr");
     }
 }
