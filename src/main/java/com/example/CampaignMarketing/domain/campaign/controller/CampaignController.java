@@ -54,7 +54,7 @@ public class CampaignController {
     }
 
     @GetMapping("/recommend")
-    public Mono<Page<CampaignRecommendResponseDto>> getRecommendedCampaigns(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public Mono<Page<CampaignResponseDto>> getRecommendedCampaigns(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         //User user = userDetails.getUser();
         return campaignService.getRecommendedCampaigns();
     }

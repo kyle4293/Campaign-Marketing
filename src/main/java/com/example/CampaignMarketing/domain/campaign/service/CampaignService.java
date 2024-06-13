@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.BodyInserter;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDate;
@@ -89,10 +90,12 @@ public class CampaignService {
         );
     }
 
-    public Mono<Page<CampaignRecommendResponseDto>> getRecommendedCampaigns() {
+    public Mono<Page<CampaignResponseDto>> getRecommendedCampaigns() {
         Pageable pageable = PageRequest.of(0, 3);
         Map<String, Object> requestBody = new HashMap<>();
-        requestBody.put("test", "test");
+        requestBody.put("user_id", "1");
+        requestBody.put("fav_food", "1");
+        requestBody.put("cannot_eat", "1");
         /*requestBody.put("user_id", user.getId());
         requestBody.put("cant_foods", user.getCant_foods());
         requestBody.put("fav_foods", user.getFav_foods());
@@ -107,9 +110,19 @@ public class CampaignService {
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(BodyInserters.fromValue(requestBody))
                 .retrieve()
-                .bodyToFlux(CampaignRecommendResponseDto.class)
+                .bodyToMono(CampaignRecommendResponseDto.class)
+                .flatMapMany(response -> Flux.fromIterable(response.getIds()))
+                .flatMap(this::findCampaignByMarketId)
+                .map(CampaignResponseDto::new)
                 .collectList()
                 .map(list -> new PageImpl<>(list, pageable, list.size()));
+    }
+
+
+    private Mono<Campaign> findCampaignByMarketId(Long marketId) {
+        return Mono.fromSupplier(() -> findMarket(marketId))
+                .map(market -> market.getCampaigns().get(0))
+                .onErrorResume(e -> Mono.empty());
     }
 
 
