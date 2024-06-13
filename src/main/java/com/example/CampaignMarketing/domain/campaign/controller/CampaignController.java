@@ -55,14 +55,14 @@ public class CampaignController {
 
     @GetMapping("/recommend")
     public Mono<Page<CampaignResponseDto>> getRecommendedCampaigns(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        //User user = userDetails.getUser();
-        return campaignService.getRecommendedCampaigns();
+        User user = userDetails.getUser();
+        return campaignService.getRecommendedCampaigns(user);
     }
 
-    @GetMapping("/recent")  //for 게스트
+    /*@GetMapping("/recent")  //for 게스트
     public Page<CampaignResponseDto> getRecentCampaigns(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         return campaignService.getRecommendedCampaigns();
-    }
+    }*/
 
     @GetMapping("/{id}")
     public CampaignResponseDto getCampaignDto(@PathVariable Long id) {

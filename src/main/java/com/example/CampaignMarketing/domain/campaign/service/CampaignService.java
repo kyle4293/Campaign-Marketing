@@ -90,20 +90,20 @@ public class CampaignService {
         );
     }
 
-    public Mono<Page<CampaignResponseDto>> getRecommendedCampaigns() {
+    public Mono<Page<CampaignResponseDto>> getRecommendedCampaigns(User user) {
         Pageable pageable = PageRequest.of(0, 3);
         Map<String, Object> requestBody = new HashMap<>();
-        requestBody.put("user_id", "1");
+        /*requestBody.put("user_id", "1");
         requestBody.put("fav_food", "1");
-        requestBody.put("cannot_eat", "1");
-        /*requestBody.put("user_id", user.getId());
+        requestBody.put("cannot_eat", "1");*/
+        requestBody.put("user_id", user.getId());
         requestBody.put("cant_foods", user.getCant_foods());
         requestBody.put("fav_foods", user.getFav_foods());
         requestBody.put("gender", user.getGender());
         LocalDate currentData = LocalDate.now();
         int age = currentData.getYear() - user.getBirthDate().getYear() + 1;
         requestBody.put("age", age);
-        requestBody.put("considerations", user.getConsiderations());*/
+        requestBody.put("considerations", user.getConsiderations());
         //return campaignRepository.findAll(pageable).map(CampaignResponseDto::new);
         return webClient.post()
                 .uri("/recommend")
