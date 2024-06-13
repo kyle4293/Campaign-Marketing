@@ -82,8 +82,22 @@ public class CampaignService {
         return campaignRepository.findAll(pageable).map(CampaignResponseDto::new);
     }
 
+    public Page<CampaignResponseDto> getRecentCampaigns() {
+        Pageable pageable = PageRequest.of(0, 3);
+        return campaignRepository.findAll(pageable).map(CampaignResponseDto::new);
+    }
 
     public long getTotalPages() {
         return campaignRepository.count();
+    }
+
+    public void deleteCampaign(User user, Long id) {
+        Campaign campaign = findCampaign(id);
+
+        if(campaign.getMarket().getUser().getId().equals(user.getId())) {
+            campaignRepository.delete(campaign);
+        } else {
+            throw new CustomException(ErrorCode.REQUIRED_ADMIN_USER_AUTHORITY);
+        }
     }
 }

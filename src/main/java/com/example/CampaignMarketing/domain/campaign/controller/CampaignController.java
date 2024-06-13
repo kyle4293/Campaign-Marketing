@@ -56,6 +56,11 @@ public class CampaignController {
         return campaignService.getRecommendedCampaigns();
     }
 
+    @GetMapping("/recent")  //for 게스트
+    public Page<CampaignResponseDto> getRecentCampaigns(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return campaignService.getRecommendedCampaigns();
+    }
+
     @GetMapping("/{id}")
     public CampaignResponseDto getCampaignDto(@PathVariable Long id) {
         return campaignService.getCampaignDto(id);
@@ -64,6 +69,12 @@ public class CampaignController {
     @GetMapping("/totalPage")
     public long getTotalPages() {
         return campaignService.getTotalPages();
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteCampaign(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long id) {
+        User user = userDetails.getUser();
+        campaignService.deleteCampaign(user, id);
     }
 
 }
