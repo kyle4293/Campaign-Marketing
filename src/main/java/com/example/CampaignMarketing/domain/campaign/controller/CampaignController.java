@@ -1,6 +1,7 @@
 package com.example.CampaignMarketing.domain.campaign.controller;
 
 
+import com.example.CampaignMarketing.domain.campaign.dto.CampaignRecommendResponseDto;
 import com.example.CampaignMarketing.domain.campaign.dto.CampaignRequestDto;
 import com.example.CampaignMarketing.domain.campaign.dto.CampaignResponseDto;
 import com.example.CampaignMarketing.domain.campaign.service.CampaignService;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import reactor.core.publisher.Mono;
 
 import java.io.IOException;
 import java.util.List;
@@ -52,14 +54,15 @@ public class CampaignController {
     }
 
     @GetMapping("/recommend")
-    public Page<CampaignResponseDto> getRecommendedCampaigns(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return campaignService.getRecommendedCampaigns();
+    public Mono<Page<CampaignResponseDto>> getRecommendedCampaigns(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        User user = userDetails.getUser();
+        return campaignService.getRecommendedCampaigns(user);
     }
 
-    @GetMapping("/recent")  //for 게스트
+    /*@GetMapping("/recent")  //for 게스트
     public Page<CampaignResponseDto> getRecentCampaigns(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         return campaignService.getRecommendedCampaigns();
-    }
+    }*/
 
     @GetMapping("/{id}")
     public CampaignResponseDto getCampaignDto(@PathVariable Long id) {

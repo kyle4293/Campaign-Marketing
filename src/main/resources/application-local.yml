@@ -1,7 +1,11 @@
 spring:
+  config:
+    activate:
+      on-profile: local
+
   data:
     redis:
-      host: ${SPRING_REDIS_HOST}
+      host: localhost
       port: 6379
       password: ${SPRING_REDIS_PASSWORD}
     python-server:
