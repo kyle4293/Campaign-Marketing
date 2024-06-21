@@ -80,7 +80,7 @@ public class WebSecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://127.0.0.1:3000","http://localhost:3000","http://52.79.190.78"));
+        configuration.setAllowedOrigins(Arrays.asList("http://127.0.0.1:3000","http://localhost:3000", "https://www.voicefinder.kr"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")); // 허용할 HTTP 메소드
         configuration.setAllowedHeaders(Arrays.asList("*")); // 모든 헤더 허용
         configuration.setExposedHeaders(Arrays.asList("Authorization, Set-Cookie")); // CORS로 인해 프론트단에서 인식하지 못하는 Authrization 헤더를 노출
@@ -107,7 +107,7 @@ public class WebSecurityConfig {
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // OPTIONS 메소드 허용
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll() // resources 접근 허용 설정
                         .requestMatchers("/").permitAll() // 메인 페이지 요청 허가
-                        .requestMatchers("/api/users/login","/api/users/signup","/api/users/kakao/**","/api/users/naver/**").permitAll()
+                        .requestMatchers("/api/users/login","/api/users/signup","/api/users/kakao/**","/api/users/naver/**","/api/campaigns/**").permitAll()
                         .anyRequest().authenticated() // 그 외 모든 요청 인증처리
                 )
                 .oauth2Login(oauth2Login -> oauth2Login

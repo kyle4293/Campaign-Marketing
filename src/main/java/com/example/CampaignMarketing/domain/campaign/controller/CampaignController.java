@@ -59,10 +59,10 @@ public class CampaignController {
         return campaignService.getRecommendedCampaigns(user);
     }
 
-    /*@GetMapping("/recent")  //for 게스트
+    @GetMapping("/recent")  //for 게스트
     public Page<CampaignResponseDto> getRecentCampaigns(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return campaignService.getRecommendedCampaigns();
-    }*/
+        return campaignService.getRecentCampaigns();
+    }
 
     @GetMapping("/{id}")
     public CampaignResponseDto getCampaignDto(@PathVariable Long id) {
