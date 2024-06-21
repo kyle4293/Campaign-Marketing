@@ -20,7 +20,7 @@ public class MarketResponseDto {
     private String address;
     private String detailAddress;
     private String description;
-    private List<String> keywords;
+//    private List<String> keywords;
     private List<String> menus;
     private List<String> imageUrls;
 
@@ -32,7 +32,7 @@ public class MarketResponseDto {
         this.address = market.getAddress();
         this.detailAddress = market.getDetailAddress();
         this.description = market.getDescription();
-        this.keywords = market.getKeywords();
+//        this.keywords = market.getKeywords();
         this.menus = market.getMenus();
         this.imageUrls = market.getImageUrls();
     }

@@ -27,14 +27,14 @@ public class Market extends Timestamped {
     @JoinColumn(name = "user_id")
     private User user;
 
-    private String businessCertificate;
+//    private String businessCertificate;
     private String companyName;
     private String businessType;
     private String phone;
     private String address;
     private String detailAddress;
     private String description;
-    private List<String> keywords;
+//    private List<String> keywords;
     private List<String> menus;
 
     @ElementCollection
@@ -47,14 +47,14 @@ public class Market extends Timestamped {
 
     public Market(User user, MarketRequestDto requestDto) {
         this.user = user;
-        this.businessCertificate = requestDto.getBusinessCertificate();
+//        this.businessCertificate = requestDto.getBusinessCertificate();
         this.companyName = requestDto.getCompanyName();
         this.businessType = requestDto.getBusinessType();
         this.phone = requestDto.getPhone();
         this.address = requestDto.getAddress();
         this.detailAddress = requestDto.getDetailAddress();
         this.description = requestDto.getDescription();
-        this.keywords = requestDto.getKeywords();
+//        this.keywords = requestDto.getKeywords();
         this.menus = requestDto.getMenus();
         this.imageUrls = requestDto.getImageUrls();
     }

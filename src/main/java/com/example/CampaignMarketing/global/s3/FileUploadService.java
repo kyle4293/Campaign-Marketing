@@ -53,4 +53,9 @@ public class FileUploadService {
     private String generateFileName(MultipartFile multipartFile) {
         return UUID.randomUUID().toString() + "-" + multipartFile.getOriginalFilename().replace(" ", "_");
     }
+
+    public void deleteFile(String fileUrl) {
+        String fileName = fileUrl.substring(fileUrl.lastIndexOf("/") + 1);
+        amazonS3Client.deleteObject(bucketName, fileName);
+    }
 }

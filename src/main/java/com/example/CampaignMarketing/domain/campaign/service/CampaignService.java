@@ -12,6 +12,7 @@ import com.example.CampaignMarketing.domain.market.repository.MarketRepository;
 import com.example.CampaignMarketing.domain.user.entity.User;
 import com.example.CampaignMarketing.global.exception.CustomException;
 import com.example.CampaignMarketing.global.exception.ErrorCode;
+import com.example.CampaignMarketing.global.s3.FileUploadService;
 import com.querydsl.core.BooleanBuilder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +31,7 @@ public class CampaignService {
 
     private final CampaignRepository campaignRepository;
     private final MarketRepository marketRepository;
+    private final FileUploadService fileUploadService;
 
 
     public CampaignResponseDto createCampaign(User user, CampaignRequestDto requestDto) {
@@ -95,6 +97,10 @@ public class CampaignService {
         Campaign campaign = findCampaign(id);
 
         if(campaign.getMarket().getUser().getId().equals(user.getId())) {
+            if (campaign.getImageUrls() != null) {
+                campaign.getImageUrls().forEach(fileUploadService::deleteFile);
+            }
+
             campaignRepository.delete(campaign);
         } else {
             throw new CustomException(ErrorCode.REQUIRED_ADMIN_USER_AUTHORITY);

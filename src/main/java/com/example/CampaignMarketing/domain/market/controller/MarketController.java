@@ -32,12 +32,12 @@ public class MarketController {
     @PostMapping(consumes = "multipart/form-data")
     public MarketResponseDto createMarket(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                           @RequestPart("marketData") MarketRequestDto requestDto,
-                                          @RequestPart("businessCertificate") MultipartFile businessCertificate,
+//                                          @RequestPart("businessCertificate") MultipartFile businessCertificate,
                                           @RequestPart(value = "companyPhotos", required = false) List<MultipartFile> files) throws IOException {
         User user = userDetails.getUser();
 
-        String certificateFile = fileUploadService.uploadFile(businessCertificate);
-        requestDto.setBusinessCertificate(certificateFile);
+//        String certificateFile = fileUploadService.uploadFile(businessCertificate);
+//        requestDto.setBusinessCertificate(certificateFile);
 
         List<String> imageUrls = null;
         if (files != null && !files.isEmpty()) {
