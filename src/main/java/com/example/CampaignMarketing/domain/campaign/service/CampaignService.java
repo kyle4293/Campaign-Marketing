@@ -97,8 +97,8 @@ public class CampaignService {
         Map<String, Object> requestBody = new HashMap<>();
 
         requestBody.put("user_id", user.getId());
-        requestBody.put("cant_foods", user.getCant_foods());
-        requestBody.put("fav_foods", user.getFav_foods());
+        requestBody.put("cant_foods", String.join(", ", user.getCant_foods()));
+        requestBody.put("fav_foods", String.join(", ", user.getFav_foods()));
 
         //requestBody.put("gender", user.getGender());
 //        LocalDate currentData = LocalDate.now();
