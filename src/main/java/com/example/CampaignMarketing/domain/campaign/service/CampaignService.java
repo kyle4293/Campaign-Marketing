@@ -99,11 +99,13 @@ public class CampaignService {
         requestBody.put("user_id", user.getId());
         requestBody.put("cant_foods", user.getCant_foods());
         requestBody.put("fav_foods", user.getFav_foods());
-        requestBody.put("gender", user.getGender());
+        //requestBody.put("cant_foods", "고수");
+        //requestBody.put("fav_foods", "치킨,피자");
+        //requestBody.put("gender", user.getGender());
         LocalDate currentData = LocalDate.now();
         int age = currentData.getYear() - user.getBirthDate().getYear() + 1;
-        requestBody.put("age", age);
-        requestBody.put("considerations", user.getConsiderations());
+        //requestBody.put("age", age);
+        //requestBody.put("considerations", user.getConsiderations());
         //return campaignRepository.findAll(pageable).map(CampaignResponseDto::new);
         return webClient.post()
                 .uri("/recommend")

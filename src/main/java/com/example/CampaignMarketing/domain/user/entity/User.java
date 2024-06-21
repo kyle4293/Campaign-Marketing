@@ -37,8 +37,20 @@ public class User extends Timestamped {
     private String blogUrl;
     private String bio; //자기소개
     private String job;
+
+    @ElementCollection
+    @CollectionTable(name = "considerations", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "consideration")
     private List<String> considerations;
+
+    @ElementCollection
+    @CollectionTable(name = "fav_foods", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "fav_food")
     private List<String> fav_foods;
+
+    @ElementCollection
+    @CollectionTable(name = "cant_foods", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "cant_food")
     private List<String> cant_foods;
     private String activityArea;
 
