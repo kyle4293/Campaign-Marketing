@@ -32,7 +32,7 @@ public class Campaign extends Timestamped {
     private LocalDate startDate;
     private LocalDate endDate;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "campaign_images", joinColumns = @JoinColumn(name = "campaign_id"))
     @Column(name = "image_url")
     private List<String> imageUrls = new ArrayList<>();
