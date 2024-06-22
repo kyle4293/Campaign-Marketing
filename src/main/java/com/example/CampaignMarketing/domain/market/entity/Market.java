@@ -42,7 +42,7 @@ public class Market extends Timestamped {
     @Column(name = "image_url")
     private List<String> imageUrls = new ArrayList<>();
 
-    @OneToMany(mappedBy = "market")
+    @OneToMany(mappedBy = "market", fetch = FetchType.EAGER)
     private List<Campaign> campaigns = new ArrayList<>();
 
     public Market(User user, MarketRequestDto requestDto) {
